@@ -19,6 +19,9 @@
 
   --distance: 24px;
   --item-in-row: 4;
+
+  --animation-time: 250ms;
+  --animation-cubic: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ======= RESET STYLES ======= */
@@ -140,8 +143,6 @@ img {
   max-width: 1158px;
   margin: 0 auto;
   padding: 0 15px;
-
-  /* outline: 2px solid red; */
 }
 
 .section {
@@ -176,6 +177,8 @@ img {
   border-radius: 50% 50%;
 
   background-color: var(--primary-brand-color);
+
+  transition: background-color var(--animation-time) var(--animation-cubic);
 }
 
 .media-icon {
@@ -192,6 +195,8 @@ img {
   letter-spacing: 0.02em;
 
   color: var(--dark-color);
+
+  transition: color var(--animation-time) var(--animation-cubic);
 }
 
 .contact-link {
@@ -201,6 +206,8 @@ img {
   color: inherit;
   line-height: 1.5;
   letter-spacing: 0.02em;
+
+  transition: color var(--animation-time) var(--animation-cubic);
 }
 
 .address {
@@ -241,6 +248,41 @@ img {
 
 .address .list {
   gap: 40px;
+}
+
+.active-page {
+  position: relative;
+  transform-origin: top;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-link::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateY(1px);
+
+  width: 100%;
+  height: 4px;
+
+  background-color: var(--pressed-state-color);
+  border-radius: 2px;
+  opacity: 0;
+
+  transition: opacity 500ms var(--animation-cubic);
+}
+
+.active-page.menu-link::after {
+  opacity: 1;
+}
+
+.menu-link:active::after {
+  opacity: 1;
 }
 
 /* ======= HERO SECTION STYLES ======= */
@@ -291,6 +333,8 @@ img {
 
   color: var(--white-bg-color);
   background-color: var(--primary-brand-color);
+
+  transition: background-color var(--animation-time) var(--animation-cubic);
 }
 
 .order-btn:hover,
@@ -418,6 +462,9 @@ img {
   color: var(--subtitle-text);
   border: 1px solid var(--subtitle-text);
   border-radius: 4px;
+
+  transition: color var(--animation-time) var(--animation-cubic),
+    border-color var(--animation-time) var(--animation-cubic);
 }
 
 .customer-logo-link:hover,
@@ -428,11 +475,6 @@ img {
 
 .customer-icon {
   fill: currentColor;
-}
-
-.customer-logo-link:hover .customer-icon,
-.customer-logo-link:active .customer-icon {
-  fill: var(--pressed-state-color);
 }
 
 /* ======= PORTFOLIO SECTION STYLES ======= */
@@ -448,6 +490,11 @@ img {
   border: 1px solid var(--accent-color);
   background-color: var(--light-color);
   color: var(--primary-brand-color);
+
+  transition: box-shadow var(--animation-time) var(--animation-cubic),
+    background-color var(--animation-time) var(--animation-cubic),
+    color var(--animation-time) var(--animation-cubic),
+    border-color var(--animation-time) var(--animation-cubic);
 }
 
 .filter-btn:hover,
@@ -502,10 +549,14 @@ img {
 
   border: 1px solid var(--accent-color);
   border-top: transparent;
+
+  transition: border var(--animation-time) var(--animation-cubic);
 }
 
 .portfolio-card-link {
   display: block;
+
+  transition: box-shadow var(--animation-time) var(--animation-cubic);
 }
 
 .portfolio-card-link:hover,
@@ -523,6 +574,36 @@ img {
 .portfolio-card {
   --item-in-row: 3;
 }
+
+.image-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-portfolio {
+  position: absolute;
+  overflow: auto;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 40px 32px;
+
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+
+  color: var(--light-color);
+  background-color: var(--primary-brand-color);
+
+  transition: transform var(--animation-time) var(--animation-cubic);
+}
+
+.image-card:hover .overlay-portfolio,
+.portfolio-card:focus .overlay-portfolio {
+  transform: translateY(-100%);
+}
+
 /* ======= FOOTER SYLES ======= */
 
 .footer {
@@ -568,4 +649,81 @@ img {
 .footer .media-link:hover,
 .footer .media-link:focus {
   background-color: var(--success-color);
+}
+
+/* ======= MODAL SYLES ======= */
+
+.overlay-modal {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+
+  background: rgba(46, 47, 66, 0.4);
+
+  transition: opacity 500ms var(--animation-cubic),
+    visibility 500ms var(--animation-cubic),
+    transform 800ms var(--animation-cubic);
+}
+
+.modal {
+  position: fixed;
+  z-index: 200;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 408px;
+  height: 576px;
+
+  background-color: var(--modal-bg-color);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--accent-color);
+  color: var(--dark-color);
+
+  transition: background-color var(--animation-time) var(--animation-cubic),
+    border var(--animation-time) var(--animation-cubic),
+    color var(--animation-time) var(--animation-cubic);
+
+  cursor: pointer;
+}
+
+.close-image {
+  display: block;
+  margin: auto auto;
+
+  fill: currentColor;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  background-color: var(--pressed-state-color);
+  border: transparent;
+  color: var(--white-bg-color);
+}
+
+.overlay-modal.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.2);
 }
