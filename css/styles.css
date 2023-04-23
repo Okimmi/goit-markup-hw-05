@@ -253,6 +253,8 @@ img {
 .active-page {
   position: relative;
   transform-origin: top;
+
+  color: var(--pressed-state-color);
 }
 
 .menu-item {
@@ -599,8 +601,8 @@ img {
   transition: transform var(--animation-time) var(--animation-cubic);
 }
 
-.image-card:hover .overlay-portfolio,
-.portfolio-card:focus .overlay-portfolio {
+.portfolio-card-link:hover .overlay-portfolio,
+.portfolio-card-link:focus .overlay-portfolio {
   transform: translateY(-100%);
 }
 
